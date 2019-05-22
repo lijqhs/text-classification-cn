@@ -418,19 +418,22 @@ OK，我们得到了84.35%的准确率，作为Benchmark，这个结果还不错
 print(classification_report(predicted, y_test))
 ```
 
-                 precision    recall  f1-score   support
+                   precision    recall  f1-score   support
     
-    _08_Finance       0.88      0.88      0.88       488
-         _10_IT       0.72      0.87      0.79       403
-     _13_Health       0.82      0.84      0.83       478
-     _14_Sports       0.95      1.00      0.97       466
-     _16_Travel       0.86      0.92      0.89       455
+      _08_Finance       0.88      0.88      0.88       488
+           _10_IT       0.72      0.87      0.79       403
+       _13_Health       0.82      0.84      0.83       478
+       _14_Sports       0.95      1.00      0.97       466
+       _16_Travel       0.86      0.92      0.89       455
     _20_Education       0.71      0.87      0.79       401
-    _22_Recruit       0.91      0.65      0.76       690
-    _23_Culture       0.80      0.77      0.79       513
-    _24_Military       0.94      0.89      0.92       516
+      _22_Recruit       0.91      0.65      0.76       690
+      _23_Culture       0.80      0.77      0.79       513
+     _24_Military       0.94      0.89      0.92       516
     
-    avg / total       0.85      0.84      0.84      4410
+         accuracy                           0.84      4410
+        macro avg       0.84      0.86      0.84      4410
+     weighted avg       0.85      0.84      0.84      4410
+    
     
 
 再看一下混淆矩阵：
@@ -489,20 +492,23 @@ predicted_lr = text_clf_lr.predict(X_test_data)
 print(classification_report(predicted_lr, y_test))
 ```
 
-                 precision    recall  f1-score   support
+                   precision    recall  f1-score   support
     
-    _08_Finance       0.87      0.91      0.89       465
-         _10_IT       0.77      0.86      0.81       440
-     _13_Health       0.91      0.82      0.86       546
-     _14_Sports       0.98      0.99      0.98       483
-     _16_Travel       0.90      0.90      0.90       488
+      _08_Finance       0.87      0.91      0.89       465
+           _10_IT       0.77      0.86      0.81       440
+       _13_Health       0.91      0.82      0.86       546
+       _14_Sports       0.98      0.99      0.98       483
+       _16_Travel       0.90      0.90      0.90       488
     _20_Education       0.79      0.91      0.85       429
-    _22_Recruit       0.86      0.85      0.85       495
-    _23_Culture       0.86      0.75      0.80       556
-    _24_Military       0.95      0.92      0.93       508
+      _22_Recruit       0.86      0.85      0.85       495
+      _23_Culture       0.86      0.75      0.80       556
+     _24_Military       0.95      0.92      0.93       508
     
-    avg / total       0.88      0.88      0.88      4410
-
+         accuracy                           0.88      4410
+        macro avg       0.88      0.88      0.88      4410
+     weighted avg       0.88      0.88      0.88      4410
+    
+    
 最后测试结果还行嘛，比Benchmark分类器好了不少。
 
 ```python
@@ -547,20 +553,23 @@ predicted_svm = text_clf_svm.predict(X_test_data)
 print(classification_report(predicted_svm, y_test))
 ```
 
-                 precision    recall  f1-score   support
+                   precision    recall  f1-score   support
     
-    _08_Finance       0.87      0.92      0.90       466
-         _10_IT       0.78      0.86      0.82       443
-     _13_Health       0.92      0.83      0.87       546
-     _14_Sports       0.99      0.99      0.99       489
-     _16_Travel       0.92      0.91      0.91       495
-    _20_Education       0.82      0.91      0.86       445
-    _22_Recruit       0.89      0.85      0.87       516
-    _23_Culture       0.84      0.83      0.83       498
-    _24_Military       0.96      0.91      0.93       512
+      _08_Finance       0.87      0.92      0.90       463
+           _10_IT       0.78      0.85      0.81       446
+       _13_Health       0.93      0.82      0.87       558
+       _14_Sports       0.99      0.99      0.99       488
+       _16_Travel       0.91      0.91      0.91       489
+    _20_Education       0.82      0.92      0.86       437
+      _22_Recruit       0.89      0.85      0.87       513
+      _23_Culture       0.85      0.83      0.84       503
+     _24_Military       0.96      0.91      0.93       513
     
-    avg / total       0.89      0.89      0.89      4410
-
+         accuracy                           0.89      4410
+        macro avg       0.89      0.89      0.89      4410
+     weighted avg       0.89      0.89      0.89      4410
+    
+    
 ```python
 confusion_matrix(predicted_svm, y_test)
 ```
