@@ -3,3 +3,5 @@
 /.ipynb_*
 /data
 *.ttf
+SogouC.reduced/
+.DS*
