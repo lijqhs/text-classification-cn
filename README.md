@@ -3,16 +3,39 @@
 
 文本分类（Text Classification）是自然语言处理中的一个重要应用技术，根据文档的内容或主题，自动识别文档所属的预先定义的类别标签。文本分类是很多应用场景的基础，比如垃圾邮件识别，舆情分析，情感识别，新闻自动分类，智能客服机器人的知识库分类等等。本文分为两个部分：
 
-- Part 1: [基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类](#part-1-基于scikit-learn机器学习的文本分类方法)
-- Part 2: [基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN](#part-2-基于预训练模型的CNN文本分类方法-Keras)
+- Part 1: 基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类[Blog Post](https://lijqhs.me/2019/05/22/sogou-news-text-classification/)
+- Part 2: 基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN[Blog Post](https://lijqhs.me/2019/05/29/text-classification-pretrained-keras-cnn/)
 
 本文语料：[下载链接](https://pan.baidu.com/s/1SMfx0X0-b6F8L9J6T5Hg2Q)，密码:dh4x。更多新闻标注语料，[下载链接](http://www.sogou.com/labs/resource/list_news.php)。
 
 预训练词向量模型来自[GitHub：Chinese Word Vectors 上百种预训练中文词向量](https://github.com/Embedding/Chinese-Word-Vectors)，下载地址：[Sogou News 300d](https://pan.baidu.com/s/1tUghuTno5yOvOx4LXA9-wg)。
 
-<!-- TOC -->autoauto- [Text Classification](#text-classification)auto    - [Part 1: [基于scikit-learn机器学习的文本分类方法](https://lijqhs.me/2019/05/22/sogou-news-text-classification/)](#part-1-基于scikit-learn机器学习的文本分类方法httpslijqhsme20190522sogou-news-text-classification)auto        - [1. 语料预处理](#1-语料预处理)auto        - [2. 生成训练集和测试集](#2-生成训练集和测试集)auto            - [生成数据集](#生成数据集)auto        - [3. 文本特征提取:TF-IDF](#3-文本特征提取tf-idf)auto        - [4. 构建分类器](#4-构建分类器)auto            - [Benchmark: 朴素贝叶斯分类器](#benchmark-朴素贝叶斯分类器)auto            - [对新文本应用分类](#对新文本应用分类)auto        - [5. 分类器的评估](#5-分类器的评估)auto            - [构建Logistic Regression分类器](#构建logistic-regression分类器)auto            - [构建SVM分类器](#构建svm分类器)auto    - [Part 2: [基于预训练模型的CNN文本分类方法-Keras](https://lijqhs.me/2019/05/29/text-classification-pretrained-keras-cnn/)](#part-2-基于预训练模型的cnn文本分类方法-kerashttpslijqhsme20190529text-classification-pretrained-keras-cnn)auto        - [1. 读取语料](#1-读取语料)auto        - [2. 加载预训练词向量模型](#2-加载预训练词向量模型)auto        - [3. 使用Keras对语料进行处理](#3-使用keras对语料进行处理)auto        - [4. 定义词嵌入矩阵](#4-定义词嵌入矩阵)auto            - [Embedding Layer](#embedding-layer)auto        - [5. 构建模型](#5-构建模型)auto        - [参考资料](#参考资料)autoauto<!-- /TOC -->
+<!-- TOC -->
 
-## Part 1: [基于scikit-learn机器学习的文本分类方法](https://lijqhs.me/2019/05/22/sogou-news-text-classification/)
+- [Text Classification](#text-classification)
+    - [Part 1: 基于scikit-learn机器学习的文本分类方法](#part-1-基于scikit-learn机器学习的文本分类方法)
+        - [1. 语料预处理](#1-语料预处理)
+        - [2. 生成训练集和测试集](#2-生成训练集和测试集)
+            - [生成数据集](#生成数据集)
+        - [3. 文本特征提取:TF-IDF](#3-文本特征提取tf-idf)
+        - [4. 构建分类器](#4-构建分类器)
+            - [Benchmark: 朴素贝叶斯分类器](#benchmark-朴素贝叶斯分类器)
+            - [对新文本应用分类](#对新文本应用分类)
+        - [5. 分类器的评估](#5-分类器的评估)
+            - [构建Logistic Regression分类器](#构建logistic-regression分类器)
+            - [构建SVM分类器](#构建svm分类器)
+    - [Part 2: 基于预训练模型的CNN文本分类方法-Keras](#part-2-基于预训练模型的cnn文本分类方法-keras)
+        - [1. 读取语料](#1-读取语料)
+        - [2. 加载预训练词向量模型](#2-加载预训练词向量模型)
+        - [3. 使用Keras对语料进行处理](#3-使用keras对语料进行处理)
+        - [4. 定义词嵌入矩阵](#4-定义词嵌入矩阵)
+            - [Embedding Layer](#embedding-layer)
+        - [5. 构建模型](#5-构建模型)
+        - [参考资料](#参考资料)
+
+<!-- /TOC -->
+
+## Part 1: 基于scikit-learn机器学习的文本分类方法
 
 基于scikit-learn机器学习的中文文本分类主要分为以下步骤：
 
@@ -326,7 +349,7 @@ text_clf_svm = Pipeline([
            [  4,  13,   0,   0,   3,   6,   1,  17, 468]])
 
 
-## Part 2: [基于预训练模型的CNN文本分类方法-Keras](https://lijqhs.me/2019/05/29/text-classification-pretrained-keras-cnn/)
+## Part 2: 基于预训练模型的CNN文本分类方法-Keras
 
 文本分类主要分为以下步骤：
 
