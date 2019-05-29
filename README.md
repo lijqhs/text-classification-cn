@@ -281,7 +281,7 @@ plt.axis('off')
     (-0.5, 1599.5, 799.5, -0.5)
 
 
-![png](wordcloud_example.png)
+![png](img/wordcloud_example.png)
 
 
 ## 3. 文本特征提取:TF-IDF
