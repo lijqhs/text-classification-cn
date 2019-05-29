@@ -1,4 +1,6 @@
-/.vscode
-/__*
-/.ipynb_*
-/data
+.vscode/
+__*/
+.ipynb_*/
+data/
+Sogou*/
+Embedding/
