@@ -3,14 +3,16 @@
 
 文本分类（Text Classification）是自然语言处理中的一个重要应用技术，根据文档的内容或主题，自动识别文档所属的预先定义的类别标签。文本分类是很多应用场景的基础，比如垃圾邮件识别，舆情分析，情感识别，新闻自动分类，智能客服机器人的知识库分类等等。本文分为两个部分：
 
-- Part 1: 基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类
-- Part 2: 基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN
+- Part 1: [基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类](#part-1-基于scikit-learn机器学习的文本分类方法)
+- Part 2: [基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN](#part-2-基于预训练模型的CNN文本分类方法-Keras)
 
 本文语料：[下载链接](https://pan.baidu.com/s/1SMfx0X0-b6F8L9J6T5Hg2Q)，密码:dh4x。更多新闻标注语料，[下载链接](http://www.sogou.com/labs/resource/list_news.php)。
 
 预训练词向量模型来自[GitHub：Chinese Word Vectors 上百种预训练中文词向量](https://github.com/Embedding/Chinese-Word-Vectors)，下载地址：[Sogou News 300d](https://pan.baidu.com/s/1tUghuTno5yOvOx4LXA9-wg)。
 
-## Part 1: 基于scikit-learn机器学习的文本分类方法
+<!-- TOC -->autoauto- [Text Classification](#text-classification)auto    - [Part 1: [基于scikit-learn机器学习的文本分类方法](https://lijqhs.me/2019/05/22/sogou-news-text-classification/)](#part-1-基于scikit-learn机器学习的文本分类方法httpslijqhsme20190522sogou-news-text-classification)auto        - [1. 语料预处理](#1-语料预处理)auto        - [2. 生成训练集和测试集](#2-生成训练集和测试集)auto            - [生成数据集](#生成数据集)auto        - [3. 文本特征提取:TF-IDF](#3-文本特征提取tf-idf)auto        - [4. 构建分类器](#4-构建分类器)auto            - [Benchmark: 朴素贝叶斯分类器](#benchmark-朴素贝叶斯分类器)auto            - [对新文本应用分类](#对新文本应用分类)auto        - [5. 分类器的评估](#5-分类器的评估)auto            - [构建Logistic Regression分类器](#构建logistic-regression分类器)auto            - [构建SVM分类器](#构建svm分类器)auto    - [Part 2: [基于预训练模型的CNN文本分类方法-Keras](https://lijqhs.me/2019/05/29/text-classification-pretrained-keras-cnn/)](#part-2-基于预训练模型的cnn文本分类方法-kerashttpslijqhsme20190529text-classification-pretrained-keras-cnn)auto        - [1. 读取语料](#1-读取语料)auto        - [2. 加载预训练词向量模型](#2-加载预训练词向量模型)auto        - [3. 使用Keras对语料进行处理](#3-使用keras对语料进行处理)auto        - [4. 定义词嵌入矩阵](#4-定义词嵌入矩阵)auto            - [Embedding Layer](#embedding-layer)auto        - [5. 构建模型](#5-构建模型)auto        - [参考资料](#参考资料)autoauto<!-- /TOC -->
+
+## Part 1: [基于scikit-learn机器学习的文本分类方法](https://lijqhs.me/2019/05/22/sogou-news-text-classification/)
 
 基于scikit-learn机器学习的中文文本分类主要分为以下步骤：
 
@@ -23,6 +25,7 @@
 ### 1. 语料预处理
 
 定义搜狗新闻文本标签的名称，类似`C000008`这样的标签是语料的子目录，在网上搜到标签对应的新闻类别，为了便于理解，定义了这个映射词典，并保留原有编号信息。在网上搜索下载`搜狗分类新闻.20061127.zip`语料并解压至`CN_Corpus`目录下，解压之后目录结构为：
+
 ```
 CN_Corpus
 └─SogouC.reduced
@@ -37,7 +40,6 @@ CN_Corpus
         ├─C000023
         └─C000024
 ```
-
 
 ```python
 category_labels = {
@@ -324,22 +326,19 @@ text_clf_svm = Pipeline([
            [  4,  13,   0,   0,   3,   6,   1,  17, 468]])
 
 
-## Part 2: 基于预训练模型的CNN文本分类方法-Keras
+## Part 2: [基于预训练模型的CNN文本分类方法-Keras](https://lijqhs.me/2019/05/29/text-classification-pretrained-keras-cnn/)
 
 文本分类主要分为以下步骤：
 
-- 读取语料
-- 加载中文预训练词向量模型
-- 使用Keras进行数据预处理，生成训练集和测试集
-- 定义词嵌入矩阵
-- 构建模型
-- 模型训练
+1. 读取语料
+2. 加载中文预训练词向量模型
+3. 使用Keras进行数据预处理，生成训练集和测试集
+4. 定义词嵌入矩阵
+5. 构建模型
 
-
-### 读取语料
+### 1. 读取语料
 
 这里读取原始语料，划分训练集和测试集，放在了后面预处理部分。
-
 
 ```python
 texts, labels = load_raw_datasets()
@@ -359,12 +358,12 @@ texts, labels = load_raw_datasets()
 |7|C000023|Culture|[0, 0, 0, 0, 0, 0, 0, 1, 0]|
 |8|C000024|Military|[0, 0, 0, 0, 0, 0, 0, 0, 1]|
 
-### 加载预训练词向量模型
+### 2. 加载预训练词向量模型
 
 解压之后的中文预训练词向量模型的文件格式是文本文件，首行只有两个空格隔开的数字：词的个数和词向量的维度，从第二行开始格式为：词 数字1 数字2 …… 数字300，形式如下：
 
 > 364180 300    
-> 人民文学出版社 0.003146 0.582671 0.049029 -0.312803 0.522986 0.026432 -0.097115 0.194231 -0.362708 ......   
+> 人民文学出版社 0.003146 0.582671 0.049029 -0.312803 0.522986 0.026432 -0.097115 0.194231 -0.362708 ......
 > ......
 
 ```python
@@ -373,7 +372,7 @@ embeddings_index = load_pre_trained()
 
     Found 364180 word vectors, dimension 300
 
-### 使用Keras对语料进行处理
+### 3. 使用Keras对语料进行处理
 
 ```python
 from keras.preprocessing.text import Tokenizer
@@ -415,10 +414,12 @@ y_val = labels_categorical[-val_samples_num:]
 ```
 
 代码中`word_index`表示发现的所有词，得到的文本序列取的是`word_index`中前面20000个词对应的索引，文本序列集合中的所有词的索引号都在20000之前：
+
 ```python
 len(data[data>=20000])
 0
 ```
+
 我们可以通过生成的词索引序列和对应的索引词典查看原始文本和对应的标签：
 
 ```python
@@ -437,7 +438,7 @@ category_labels[dict_swaped(labels_index)[argmax(labels_categorical[0])]]
     '_20_Education'
 
 
-### 定义词嵌入矩阵
+### 4. 定义词嵌入矩阵
 
 下面创建一个词嵌入矩阵，用来作为上述文本集合词典（只取序号在前`MAX_WORDS_NUM`的词，对应了比较常见的词）的词嵌入矩阵，矩阵维度是`(MAX_WORDS_NUM, EMBEDDING_DIM)`。矩阵的每一行`i`代表词典`word_index`中第`i`个词的词向量。这个词嵌入矩阵是预训练词向量的一个子集。我们的新闻语料中很可能有的词不在预训练词向量中，这样的词在这个词向量矩阵中对应的向量元素都设为零。还记得上面用`pad_sequence`补充的`0`元素么，它对应在词嵌入矩阵的向量也都是零。在本例中，20000个词有92.35%在预训练词向量中。
 
@@ -463,6 +464,7 @@ nonzero_elements / MAX_WORDS_NUM
 #### Embedding Layer
 
 嵌入层的输入数据`sequence`向量的整数是文本中词的编码，前面看到这个获取序列编码的步骤使用了Keras的`Tokenizer API`来实现，如果不使用预训练词向量模型，嵌入层是用随机权重进行初始化，在训练中将学习到训练集中的所有词的权重，也就是词向量。在定义`Embedding`层，需要至少3个输入数据：
+
 - `input_dim`：文本词典的大小，本例中就是`MAX_WORDS_NUM + 1`；
 - `output_dim`：词嵌入空间的维度，就是词向量的长度，本例中对应`EMBEDDING_DIM`；
 - `input_length`：这是输入序列的长度，本例中对应`MAX_SEQUENCE_LEN`。
@@ -473,7 +475,7 @@ nonzero_elements / MAX_WORDS_NUM
 - 嵌入层作为深度学习的第一个隐藏层，本身就是深度学习模型训练的一部分；
 - 加载预训练词向量模型，这是一种迁移学习，本文就是这样的示例。
 
-### 构建模型
+### 5. 构建模型
 
 Keras支持两种类型的模型结构：
 
@@ -534,9 +536,6 @@ embedding_custom = model1.layers[0].get_weights()[0]
 embedding_custom
 ```
 
-
-
-
     array([[ 0.39893672, -0.9062594 ,  0.35500282, ..., -0.73564297,
              0.50492775, -0.39815223],
            [ 0.10640696,  0.18888871,  0.05909824, ..., -0.1642032 ,
@@ -580,9 +579,7 @@ model1.layers[0].get_config()
 plot_history(history1)
 ```
 
-
 ![acc_loss_model1](img/acc_loss_model1.png)
-
 
 第一个模型训练时间花了大约30分钟训练完30个epoch，这是因为模型需要训练嵌入层的参数，下面第二个模型在第一个模型基础上加载词嵌入矩阵，并将词嵌入矩阵设为不可训练，看是否可以提高训练的效率。
 
@@ -711,6 +708,7 @@ plot_history(history3)
 
 
 通过加入池化层`MaxPooling1D`，降低了过拟合的情况。验证集上的准备度超过了前两个模型，也超过了传统机器学习方法。
+
 
 ### 参考资料
 

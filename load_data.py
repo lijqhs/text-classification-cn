@@ -70,7 +70,7 @@ def load_raw_datasets():
 
         for fname in file_list:
             f = open(os.path.join(label_dir, fname), encoding='gb2312', errors='ignore')
-            texts.append(preprocess(f.read()))
+            texts.append(preprocess_keras(f.read()))
             f.close()
             labels.append(labels_index[label])
             
