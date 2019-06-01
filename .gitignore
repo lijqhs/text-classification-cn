@@ -4,3 +4,5 @@ __*/
 data/
 Sogou*/
 Embedding/
+.DS_Store
+*.ipynb
