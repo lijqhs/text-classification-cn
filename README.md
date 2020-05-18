@@ -6,7 +6,8 @@
 - Part 1: 基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类。[Blog Post](https://lijqhs.github.io/2019/05/22/text-classification-scikit-learn/)
 - Part 2: 基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN。[Blog Post](https://lijqhs.github.io/2019/05/29/text-classification-pretrained-keras-cnn/)
 
-本文语料：[下载链接](https://pan.baidu.com/s/1SMfx0X0-b6F8L9J6T5Hg2Q)，密码:dh4x。更多新闻标注语料，[下载链接](http://www.sogou.com/labs/resource/list_news.php)。
+本文语料：[下载链接](https://pan.baidu.com/s/1Z4nMw-Eem0C71m8djI-OAA)，密码:P9M4。更多新闻标注语料，[下载链接](http://www.sogou.com/labs/resource/list_news.php)。
+
 
 预训练词向量模型来自[GitHub：Chinese Word Vectors 上百种预训练中文词向量](https://github.com/Embedding/Chinese-Word-Vectors)，下载地址：[Sogou News 300d](https://pan.baidu.com/s/1tUghuTno5yOvOx4LXA9-wg)。
 
