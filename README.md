@@ -232,7 +232,7 @@ predicted
 有了分类器，以及知道了如何用分类器来对新的文本进行分类预测，那么我们可以用前面划分出来的测试集对这个分类器进行性能评估。我们得到了84.35%的准确率，作为Benchmark，这个结果还不错。调用`classification_report`可以得到更详细的结果：
 
 ```python
-print(classification_report(predicted, y_test))
+print(classification_report(y_test, predicted))
 ```
 
                    precision    recall  f1-score   support
@@ -255,7 +255,7 @@ print(classification_report(predicted, y_test))
 再看一下混淆矩阵：
 
 ```python
-confusion_matrix(predicted, y_test)
+confusion_matrix(y_test, predicted)
 ```
 
     array([[429,  12,  15,  10,   5,   3,   6,   4,   4],
