@@ -3,8 +3,8 @@
 
 文本分类（Text Classification）是自然语言处理中的一个重要应用技术，根据文档的内容或主题，自动识别文档所属的预先定义的类别标签。文本分类是很多应用场景的基础，比如垃圾邮件识别，舆情分析，情感识别，新闻自动分类，智能客服机器人的知识库分类等等。本文分为两个部分：
 
-- Part 1: 基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类。[Blog Post](https://lijqhs.github.io/2019/05/%E5%9F%BA%E4%BA%8E%E6%90%9C%E7%8B%97%E6%96%B0%E9%97%BB%E8%AF%AD%E6%96%99%E7%9A%84%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/)
-- Part 2: 基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN。[Blog Post](https://lijqhs.github.io/2019/05/%E5%9F%BA%E4%BA%8E%E9%A2%84%E8%AE%AD%E7%BB%83%E8%AF%8D%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E6%96%B9%E6%B3%95/)
+- Part 1: 基于scikit-learn机器学习Python库，对比几个传统机器学习方法的文本分类。[Blog Post](https://lijqhs.github.io/2019/05/text-classification-scikit-learn/)
+- Part 2: 基于预训练词向量模型，使用Keras工具进行文本分类，用到了CNN。[Blog Post](https://lijqhs.github.io/2019/05/text-classification-pretrained-keras-cnn/)
 
 本文语料：[下载链接](https://pan.baidu.com/s/1Z4nMw-Eem0C71m8djI-OAA)，密码:P9M4。更多新闻标注语料，[下载链接](http://www.sogou.com/labs/resource/list_news.php)。
 
